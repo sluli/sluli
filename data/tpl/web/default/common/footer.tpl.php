@@ -1,0 +1,12 @@
+<?php defined('IN_IA') or exit('Access Denied');?><script src="./resource/js/jquery.min.js?v=2.1.4"></script>
+<script src="./resource/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="./resource/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="./resource/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="./resource/js/plugins/layer/layer.min.js"></script>
+<script src="./resource/js/hplus.min.js?v=4.1.0"></script>
+<script type="text/javascript" src="./resource/js/contabs.min.js"></script>
+<script src="./resource/js/plugins/pace/pace.min.js"></script>
+<script src="./resource/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<link href="./resource/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+</body>
+</html>

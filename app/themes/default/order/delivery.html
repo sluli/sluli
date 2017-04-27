@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>订单查询</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+    <script src="./resource/js/jquery.min.js"></script>
+</head>
+<body>
+<div >
+
+    <div><img src="./resource/images/cd.jpg" width="100%"></div>
+    <form action="" method="post">
+        <input type="hidden" name="token" value="{$_W['token']}" />
+        <input type="hidden" name="submit" value="true" />
+        <div class="am-g" style="padding:10px 0 0 10px;">
+            <div class="am-col col-lg-6">
+                <div class="am-input-group">
+                    <label for="doc-ipt-email-1">请输入要查询的订单信息</label>
+                    <input type="text" name="infos" class="am-form-field" placeholder="收货人或者手机号">
+                </div>
+                <br />
+                <button class="am-btn am-btn-secondary am-radius" type='submit'>提交</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script>
+    function hit(arg1,arg2){
+        var to_url = "http://m.kuaidi100.com/index_all.html?type="+arg1+"&postid="+arg2+"#result";
+        window.location.href = to_url;
+    }
+</script>
+<style>
+    .am-form-field{width: 95%!important;}
+</style>
+</body>
+</html>

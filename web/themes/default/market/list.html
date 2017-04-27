@@ -1,0 +1,76 @@
+{template 'common/header'}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>推广列表</h5>
+                    <div class="ibox-tools">
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <!--<div class="col-sm-5 m-b-xs">-->
+                        <!--<div class="input-group">-->
+                        <!--<input type="text" placeholder="请输入关键词" class="input-sm form-control">-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button type="button" class="btn btn-sm btn-primary"> 搜索</button>-->
+                        <!--</span>-->
+
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-sm-4 m-b-xs">
+                            <a href="{php echo urlGo('market','index', array('do'=>'add'))}" class="btn btn-sm btn-danger"> 添加推广</a>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+
+                                <th></th>
+                                <th>标题</th>
+                                <th>商品</th>
+                                <th>添加人</th>
+                                <th>状态</th>
+                                <th>添加日期</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {loop $list $row}
+                            <tr>
+                                <td>
+                                    {$row['id']}
+                                </td>
+                                <td><a href="{$row['out_link']}" target="_blank"> {$row['title']}</a></td>
+                                <td>{$row['name']}</td>
+                                <td>{$row['username']}</td>
+                                <td>
+                                    <i class="fa {if $row['status']}fa-check text-navy{else}fa-close text-muted{/if}"></i>
+                                </td>
+                                <td>{php echo date('Y-m-d', $row['add_time']);}</td>
+                                <td>
+                                    <a href="{php echo urlGo('market','index', ['do'=>'add', 'id'=>$row['id']]);}" class="btn btn-primary btn-sm">编辑</a>
+                                    <a href="{php echo urlGo('market','index', ['do'=>'chg_status', 'id'=>$row['id'], 'status'=>!$row['status']]);}" class="btn btn-warning btn-sm">{if $row['status']}下架{else}上架{/if}</a>
+                                    <a href="{php echo urlGo('market','index', ['do'=>'del', 'id'=>$row['id']]);}" onclick="if(confirm('确定删除?')==false)return false;" class="btn btn-primary btn-sm">删除</a>
+                                    <a href="{php echo urlGo('market','comment', ['market_id'=>$row['id']]);}" class="btn btn-primary btn-sm">评论管理</a>
+                                </td>
+                            </tr>
+                            {/loop}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{template 'common/footer'}

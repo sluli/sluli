@@ -1,0 +1,30 @@
+{template 'common/header'}
+<body class="gray-bg">
+<div class="row" style="padding: 5%;">
+    <div class="col-sm-3">
+        </div>
+    <div class="col-sm-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>提示</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="alert alert-{$type}">
+                    {$msg}
+                </div>
+                <div class="">
+                    <a href="{if $redirect}{$redirect}{else}javascript:history.go(-1);{/if}">点击这里返回</a>
+                    {if $redirect}
+                    <script type="text/javascript">
+                        setTimeout(function () {
+                            location.href="{$redirect}";
+                        },1500)
+                    </script>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{template 'common/footer'}

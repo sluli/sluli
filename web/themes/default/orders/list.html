@@ -1,0 +1,161 @@
+{template 'common/header'}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>推广列表</h5>
+                    <div class="ibox-tools">
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form method="get" action="" id="order_form">
+                        <input type="hidden" name="c" value="{$_W['controller']}">
+                        <input type="hidden" name="a" value="{$_W['action']}">
+                        <input type="hidden" name="export" id="export" value="0" />
+                    <div class="row">
+                        {if $_W['isfounder']}
+                        <div class="col-sm-1 m-b-xs">
+                            <select name="roles_id" class="input-sm form-control input-s-sm inline">
+                                <option value="0">所有角色</option>
+                                {loop $roles_list $roles}
+                                <option value="{$roles['id']}" {if $roles['id']==$_GPC['roles_id']}selected{/if}>{$roles['name']}</option>
+                                {/loop}
+                            </select>
+                        </div>
+                        {/if}
+                        <div class="col-sm-1 m-b-xs">
+                            <input type="text" name="oid" placeholder="订单号" class="input-sm form-control">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <input type="text" name="gid" placeholder="商品编号" class="input-sm form-control">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <input type="text" name="name" placeholder="收件人" class="input-sm form-control">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <input type="text" name="mobile" placeholder="电话" class="input-sm form-control">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <input type="text"  name="delivery_code" placeholder="物流单号" class="input-sm form-control">
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-sm-2 m-b-xs">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start_time" value="" />
+                                    <span class="input-group-addon">到</span>
+                                    <input type="text" class="input-sm form-control" name="end_time" value="" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2 m-b-xs">
+                                <div class="input-group">
+                                    <select name="status" class="input-sm form-control">
+                                        <option value="0">所有状态</option>
+                                        <option value="1">异常订单</option>
+                                        <option value="2">取消</option>
+                                        <option value="3">未发货</option>
+                                        <option value="4">已发货</option>
+                                        <option value="5">已收货</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary" id="search_btn"> 搜索</button>
+                                    <button type="button" class="btn btn-sm btn-defult" id="export_btn">导出</button>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 m-b-xs">
+                                <a href="{php echo urlGo('orders','send')}" class="btn btn-sm btn-danger"> 批量发货</a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+
+                                <th>订单号</th>
+                                <th>商品信息</th>
+                                <th>商品款式</th>
+                                <th>商品规格</th>
+                                <th>收件人信息</th>
+                                <th>状态</th>
+                                <th>物流</th>
+                                <th>下单时间</th>
+                                <th>推广人</th>
+                                <th>下单情况</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {loop $list $row}
+                            <tr>
+                                <td>
+                                    {$row['oid']}
+                                </td>
+                                <td>
+                                    {$row['goods_name']}<br />
+                                    ￥{$row['price']}
+                                </td>
+                                <td>{$row['formats']}</td>
+                                <td>{$row['size']}</td>
+                                <td>
+                                    {$row['name']} ( {$row['mobile']} )<br />
+                                    {$row['province']} - {$row['city']} - {$row['district']}<br />
+                                    {$row['address']}
+                                </td>
+
+                                <td>{php echo getOrderStatus($row['status'])}</td>
+                                <td>
+                                    {$row['delivery']} - {$row['delivery_code']}
+                                </td>
+                                <td>{php echo date('Y-m-d H:i:s', $row['add_time']);}</td>
+                                <td>{$row['roles_name']}<br />{$row['sale_name']}</td>
+                                <td>
+                                	{if $row['is_assist']==1}
+                                		协助下单
+                                	{else}
+                                		客户下单
+                                	{/if}
+                                </td>
+                                <td>
+                                    <a href="{php echo urlGo('orders','info', ['oid'=>$row['oid']]);}" class="btn btn-primary btn-sm">详情</a>
+                                    {if $row['status']}
+                                    <a href="{php echo urlGo('orders','index', ['do'=>'chg_status', 'oid'=>$row['oid'], 'status'=>0]);}" class="btn btn-warning btn-sm">取消</a>
+                                    {if $row['status']==2}
+                                    <a href="{php echo urlGo('orders','index', ['do'=>'chg_status', 'oid'=>$row['oid'], 'status'=>3]);}" class="btn btn-warning btn-sm">已收货</a>
+                                    {/if}
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/loop}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{template 'common/footer'}
+<script type="text/javascript">
+    $(function () {
+        $("#export_btn").click(function () {
+            $("#export").val(1);
+            $("#order_form").submit();
+        });
+        $("#search_btn").click(function () {
+            $("#export").val(0);
+            $("#order_form").submit();
+        });
+        $('#datepicker input').datepicker({
+        });
+    })
+</script>
